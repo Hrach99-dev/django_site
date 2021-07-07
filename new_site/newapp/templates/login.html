@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Login Page {% endblock %}
+
+
+{% block content %}
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h1>Login form</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.email}} <br>
+                {{ form.password}} <br>
+                <input class="w-25 mt-3 btn btn-outline-primary " type="submit" value="Login">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

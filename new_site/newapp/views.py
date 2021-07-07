@@ -1,15 +1,36 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from .forms import LoginForm, RegisterForm, AddProduct
 
 
 # Create your views here.
 
 
-# class-nerov mi ereq viewser@ ------------------<<<<<<
+
 
 def index(request):
     return render(request, 'index.html')
 
 
+
+def login(request):
+    form = LoginForm(request.POST)
+    
+    if form.is_valid():
+        return redirect('user')
+
+    return render(request, 'login.html', {'form':form})
+
+
+
+
 def register(request):
-    return render(request, 'register.html')
+    form = RegisterForm(request.POST)
+    
+    if form.is_valid():
+        return redirect('login')
+    return render(request, 'register.html', {'form':form})
+
+
+
+def user(request):
+    return render(request, 'user.html')
