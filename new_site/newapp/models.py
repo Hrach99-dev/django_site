@@ -1,4 +1,3 @@
-
 from django.db import models
 
 # Create your models here.
@@ -6,10 +5,12 @@ class User(models.Model):
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
-    is_admin = models.BooleanField(default=False)
+    password = models.CharField(max_length=64)
+    admin = models.BooleanField(default=False)
 
     def __repr__(self) -> str:
-        return f'User name is {self.name}'
+        return f'User - {self.name} {self.surname}'
+    
     
 
 class Product(models.Model):

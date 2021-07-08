@@ -4,5 +4,8 @@
 
 
 {% block content %}
-    <h1>Home Page</h1>
+    <p>All users</p>
+    {% for user in users %}
+        <p>User ... name - {{user.name}}, surname - {{user.surname}}, email - {{user.email}}, admin - {{user.admin}}, password - {{user.password}}</p>
+    {% endfor %}
 {% endblock %}

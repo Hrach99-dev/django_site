@@ -1,3 +1,4 @@
+
 from django import forms
 
 class LoginForm(forms.Form):
@@ -10,7 +11,7 @@ class RegisterForm(forms.Form):
     surname = forms.CharField(label='Surname', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a surname'}))
     email = forms.CharField(label='Email', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a email'}))
     password = forms.CharField(label='Password', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a password'}))
-    admin = forms.BooleanField(label='Admin', required=True)
+    admin = forms.BooleanField(label='Admin', required=False)
 
 
 class AddProduct(forms.Form):
