@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AddProduct</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block title %} Add Product {% endblock %}
+{% block content %}
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h3>Add Product</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.title}} <br>
+                {{ form.description}} <br>
+                {{ form.price}} <br>
+                {{ form.published}} <br>
+                <input class="w-25 mt-3 btn btn-outline-primary " type="submit" value="Register">
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>
