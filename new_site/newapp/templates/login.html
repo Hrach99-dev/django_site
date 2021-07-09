@@ -9,7 +9,7 @@
             <h3>Login form</h3>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.email}} <br>
+                {{ form.username}} <br>
                 {{ form.password}} <br>
                 <input class="w-25 mt-3 btn btn-outline-primary " type="submit" value="Login">
             </form>

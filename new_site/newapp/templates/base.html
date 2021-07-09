@@ -16,12 +16,22 @@
                 <li class="nav-link">
                   <a class="text-decoration-none" href="{% url 'index' %}">Home</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-link">
-                  <a class="text-decoration-none" href="{% url 'login' %}">Login</a>
+                  <a class="text-decoration-none" href="#">About</a>
+                </li>
+                <li class="nav-link">
+                  <a class="text-decoration-none" href="{% url 'logout_view' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-link">
+                  <a class="text-decoration-none" href="{% url 'login_user' %}">Login</a>
                 </li>
                 <li class="nav-link">
                     <a class="text-decoration-none" href="{% url 'register' %}">Register</a>
                 </li>
+                {% endif %}
+              </ul>
             </div>
           </div>
         {% block content %}

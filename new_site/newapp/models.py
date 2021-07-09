@@ -11,6 +11,9 @@ class User(models.Model):
     def __repr__(self) -> str:
         return f'User - {self.name} {self.surname}'
     
+    def __str__(self) -> str:
+        return self.name
+    
     
 
 class Product(models.Model):
