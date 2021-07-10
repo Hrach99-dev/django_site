@@ -4,25 +4,13 @@
 
 
 {% block content %}
-    <div class="col">
-        <div class="h-100 p-5 bg-light border rounded-3 text-center">
-            <h3>Register form</h3>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.name}} <br>
-                {{ form.surname}} <br>
-                {{ form.email}} <br>
-                {{ form.username}} <br>
-                {{ form.password}} <br>
-                <div>Is Admin? </div> {{ form.admin}} <br>
-                <input class="w-25 mt-3 btn btn-outline-primary" type="submit" value="Register">
-            </form>
-            {% if messages %}
-                {% for message in messages %}
-                    <p>{{message}}</p>
-                {% endfor %}
-            {% endif %}
-
-        </div>
-    </div>
+    <div class="container py-5">
+	<h1>Register</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ register_form }}
+		<button class="btn btn-primary" type="submit">Register</button>
+	</form>
+	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+</div>
 {% endblock %}

@@ -4,16 +4,13 @@
 
 
 {% block content %}
-    <div class="col">
-        <div class="h-100 p-5 bg-light border rounded-3 text-center">
-            <h3>Login form</h3>
-            <form method="POST" action="">
-                {% csrf_token %}
-                {{ form.email}} <br>
-                {{ form.password}} <br>
-                <button type="submit", class="w-25 mt-3 btn btn-outline-primary">Login</button>
-            </form>
-            
-        </div>
-    </div>
+<div class="container py-5">
+  <h1>Login</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ login_form }}
+    <button class="btn btn-primary" type="submit">Login</button>
+  </form>
+  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+</div>
 {% endblock %}
