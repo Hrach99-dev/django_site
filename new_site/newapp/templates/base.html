@@ -17,29 +17,25 @@
                   <a class="text-decoration-none" href="{% url 'index' %}">Home</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-link">
-                  <a class="text-decoration-none" href="#">About</a>
-                </li>
-                <li class="nav-link">
-                  <a class="text-decoration-none" href="{% url 'logout_view' %}">Logout</a>
-                </li>
-                
+                  <li class="nav-link">
+                    <a class="text-decoration-none" href="{% url 'addprod' %}">Add Product</a>
+                  </li>
+                  <li class="nav-link">
+                    <a class="text-decoration-none" href="{% url 'about' %}">AboutUs</a>
+                  </li>
+                  <li class="nav-link">
+                    <a class="text-decoration-none" href="{% url 'profile' %}">Profile</a>
+                  </li>
+                  <li class="nav-link">
+                    <a class="text-decoration-none" href="{% url 'logout' %}">Logout</a>
+                  </li>
                 {% else %}
-                <li class="nav-link">
-                  <a class="text-decoration-none" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-link">
-                    <a class="text-decoration-none" href="{% url 'register' %}">Register</a>
-                </li>
-                <li class="nav-link">
-                  <a class="text-decoration-none" href="addprod">Add Product</a>
-                </li>
-
-
-
-
-
-
+                  <li class="nav-link">
+                    <a class="text-decoration-none" href="{% url 'login' %}">Login</a>
+                  </li>
+                  <li class="nav-link">
+                      <a class="text-decoration-none" href="{% url 'register' %}">Register</a>
+                  </li>
                 {% endif %}
               </ul>
             </div>

@@ -5,12 +5,12 @@ from .models import *
 
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'name', 'surname', 'password',
-    'admin')
-    list_filter = ('email', 'admin')
-    search_fields = ('name', 'surname')
+# @admin.register(User)
+# class UserAdmin(admin.ModelAdmin):
+#     list_display = ('email', 'name', 'surname', 'password',
+#     'admin')
+#     list_filter = ('email', 'admin')
+#     search_fields = ('name', 'surname')
 
 
 

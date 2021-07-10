@@ -4,13 +4,20 @@
 
 
 {% block content %}
-<div class="container py-5">
-  <h1>Login</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ login_form }}
-    <button class="btn btn-primary" type="submit">Login</button>
-  </form>
-  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
-</div>
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h3>Login form</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <input type="password" name="password" placeholder="password" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <button type="submit", class="w-25 mt-3 btn btn-outline-primary">Login</button>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

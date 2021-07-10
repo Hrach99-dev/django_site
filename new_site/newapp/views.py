@@ -1,21 +1,23 @@
-from django.contrib.auth import login, authenticate
-from .forms import AddProduct, NewUserForm
+from django.contrib.auth import hashers
+from .forms import AddProduct
 from django.shortcuts import render, redirect
-from .models import User, Product
+from .models import Product
 
 
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
 from django.contrib import auth
 
+from django.contrib.auth.models import User
+
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
+
+
 
 # Create your views here.
 
-from django.views.generic import FormView, View
 
 
 
@@ -24,99 +26,68 @@ def index(request):
     return render(request, 'index.html', {'users':users})
 
 
+def about(request):
+    return render(request, 'about.html')
 
 
-
-
-def login_request(request):
+def login(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                return redirect("main:homepage")
-            else:
-                messages.error(request,"Invalid username or password.")
-        else:
-            messages.error(request,"Invalid username or password.")
-    form = AuthenticationForm()
-    return render(request, "login.html", {"login_form":form})
-
-
-'''def login_view(request):
-    
-    form = LoginForm(request.POST)
-    if form.is_valid():
-        
-        username = User.objects.get(email=form.cleaned_data['email']).username
+        email = request.POST['email']
         password = request.POST['password']
 
-        print(username, password)
+        username = User.objects.filter(email=email).first().username
 
-        check_user = User.objects.get(username=username)
+        user = auth.authenticate(username=username, password=password)
+        print(user)
 
-        if check_password(password, check_user.password):
-            # user = authenticate(request, username=username, password=check_user.password)
-            new_user = auth.authenticate(request, username=username, password=password)
-            
-            # print(check_password('gadot', check_user.password))  <<<<<<<<< TRUE
-            print(new_user)
-
-            if new_user is not None:
-                
-                auth.login(request, new_user)
-
+        if user is not None:
+            auth.login(request, user)
+            return redirect('profile')
     
-    return render(request, 'login.html', {'form':form})'''
 
-
+    return render(request, 'login.html', {})
 
 
 
 def register(request):
+
     if request.method == "POST":
-        form = NewUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Registration successful." )
-            return redirect("main:homepage")
-        messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm()
-    return render (request, "register.html", {"register_form":form})
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        
+        is_saler = request.POST.get('is_saler', False)
+        
+        if is_saler == 'on':
+            is_saler = True
 
-
-
-'''def register(request):
-    form = RegisterForm(request.POST)
-    
-    if form.is_valid():
-        chack_user = User.objects.filter(email=form.cleaned_data['email']).first()
-        if not chack_user:
-            user = User(name=form.cleaned_data['name'],
-                        surname=form.cleaned_data['surname'],
-                        email=form.cleaned_data['email'],
-                        username=form.cleaned_data['username'],
-                        password=form.cleaned_data['password'],
-                        admin=form.cleaned_data['admin'],
-                        )
-            user.save()
+        if password1 == password2:
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'Email is Taken')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'Username is Taken')
+            else:
+                passowrd_hash = make_password(password1, hasher='pbkdf2_sha256')
             
-            return redirect('login_view')
+                user = User(first_name=first_name, last_name=last_name,
+                            username=username, email=email,
+                            password=passowrd_hash, is_staff=is_saler)
+                user.save()
+                messages.success(request, 'Thanks for the registration!')
+                return redirect('login')
         else:
-            messages.warning(request, 'Email is already taken.')
-            return redirect('register')
-    return render(request, 'register.html', {'form':form})'''
+            messages.warning(request, 'Password not matching...')
+
+    return render(request, 'register.html', {})
 
 
 
 
 
-def logout_view(request):
+def logout(request):
     auth.logout(request)
     return redirect('login')
 
@@ -126,7 +97,7 @@ def logout_view(request):
 
 # @login_required
 def profile(request):
-    user_id = None
+    user_id = request.user
     
     return render(request, 'profile.html', {'user_id':user_id})
 

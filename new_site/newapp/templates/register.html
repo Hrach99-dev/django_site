@@ -4,13 +4,30 @@
 
 
 {% block content %}
-    <div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-		{{ register_form }}
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
-</div>
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h3>Register form</h3>
+            <form method="POST" accept="register">
+                {% csrf_token %}
+                <input type="text" name="first_name" placeholder="First Name" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <input type="text" name="last_name" placeholder="Last Name" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <input type="text" name="username" placeholder="Username" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <input type="email" name="email" placeholder="Email" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <input type="password" name="password1" placeholder="Password" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <input type="password" name="password2" placeholder="Confirm Password" class="w-50 mt-3 border pt-2 pb-2 border-primary"> <br>
+                <!-- <input type="checkbox" name="is_saler" placeholder="Is saler?" class=""> <br> -->
+                <div class="form-check form-switch" style="width: 105px; margin: 15px auto 0px">
+                    <input class="form-check-input" name="is_saler" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Is Saler?</label>
+                  </div>
+                <input class="w-25 mt-3 btn btn-outline-primary" type="submit" value="Register">
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
 {% endblock %}
