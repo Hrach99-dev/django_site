@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
+
 
 # Create your models here.
 class User(models.Model):
@@ -6,8 +8,15 @@ class User(models.Model):
     surname = models.CharField(max_length=64)
     email = models.EmailField(max_length=254, unique=True)
     username = models.CharField(max_length=64, unique=True)
-    password = models.CharField(max_length=64)
+    password = models.CharField(max_length=256)
     admin = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password, None, 'pbkdf2_sha256')
+        super(User, self).save(*args, **kwargs)
+
+
+
 
     def __repr__(self) -> str:
         return f'User - {self.name} {self.surname}'
@@ -15,6 +24,7 @@ class User(models.Model):
     def __str__(self) -> str:
         return self.name
     
+
     
 
 class Product(models.Model):

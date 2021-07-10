@@ -1,13 +1,13 @@
 from django.urls import path
 from .views import *
-from .user.views import *
 
 
 urlpatterns = [
     path('', index, name='index'),
-    path('login_user', login_user, name='login_user'),
+    path('login',  login_view, name='login_view'),
     path('register', register, name='register'),
     path('profile', profile, name='profile'),
-    path('logout_view', logout_view, name='logout_view'),
-    path('addprod', addprod, name='addprod')
+    path('logout_view', logout_view, {'redirect_authenticated_user': True}, name='logout_view'),
+    path('addprod', addprod, name='addprod'),
+    
 ]

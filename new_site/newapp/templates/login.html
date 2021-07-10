@@ -7,13 +7,13 @@
     <div class="col">
         <div class="h-100 p-5 bg-light border rounded-3 text-center">
             <h3>Login form</h3>
-            <form method="POST">
+            <form method="POST" action="">
                 {% csrf_token %}
-                {{ form.username}} <br>
+                {{ form.email}} <br>
                 {{ form.password}} <br>
-                <input class="w-25 mt-3 btn btn-outline-primary " type="submit" value="Login">
+                <button type="submit", class="w-25 mt-3 btn btn-outline-primary">Login</button>
             </form>
-
+            
         </div>
     </div>
 {% endblock %}

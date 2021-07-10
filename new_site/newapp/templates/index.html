@@ -6,6 +6,6 @@
 {% block content %}
     <p>All users</p>
     {% for user in users %}
-        <p>User ... name - {{user.username}}, surname - {{user.surname}}, email - {{user.email}}, admin - {{user.admin}}, password - {{user.password}}</p>
+        <p>User ... name - {{user.name}}, surname - {{user.surname}}, email - {{user.email}}, username - {{user.username}} admin - {{user.admin}}, password - {{user.password}}</p>
     {% endfor %}
 {% endblock %}

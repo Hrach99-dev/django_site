@@ -1,16 +1,13 @@
 
 from django import forms
-from django.contrib.auth.models import User
+
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a username'}))
+    email = forms.CharField(label='Email', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a email'}))
     password = forms.CharField(label='Password', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a password'}))
-        
-    class Meta:
-        model = User
-        fields = ('username', 'password' )
-
+    
+    
 
 class RegisterForm(forms.Form):
     name = forms.CharField(label='Name', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a name'}))
@@ -20,6 +17,7 @@ class RegisterForm(forms.Form):
     password = forms.CharField(label='Password', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a password'}))
     admin = forms.BooleanField(label='Admin', required=False)
 
+    
 
 class AddProduct(forms.Form):
     title = forms.CharField(label='Product name', required=True, widget=forms.TextInput(attrs={'class':'w-50 mt-3 border pt-2 pb-2 border-primary', 'placeholder':'Enter a product name'}))
