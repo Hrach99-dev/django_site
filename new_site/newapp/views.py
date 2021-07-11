@@ -2,7 +2,7 @@ from django.contrib.auth import hashers
 from .forms import AddProduct
 from django.shortcuts import render, redirect
 from .models import Product
-
+from datetime import date
 
 from django.contrib import messages
 
@@ -112,9 +112,9 @@ def addprod(request):
             title=form.cleaned_data['title'],
             description=form.cleaned_data['description'],
             price=form.cleaned_data['price'],
-            timestamp=form.cleaned_data['timestamp'],
+            timestamp= date.today().strftime("%m/%d/%y"), #<<<<----????
             published=form.cleaned_data['published'],
-            user=form.cleaned_data['user']
+            user = request.user
         )
         prod.save()
 
