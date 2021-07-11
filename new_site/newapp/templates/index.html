@@ -4,8 +4,30 @@
 
 
 {% block content %}
-    <p>All users</p>
-    {% for user in users %}
-        <p>User ... first_name - {{user.first_name}}, last_name - {{user.last_name}}, username - {{user.username}}, email - {{user.email}}, admin - {{user.is_staff}}, password - {{user.password}}</p>
-    {% endfor %}
+    
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h1>Welcome</h1>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for product in products%}
+            <div class="col-3">
+                <div class="card">
+                    <img src="media/{{product.image}}" class="card-img-top" height="200px">
+                    <div class="card-body">
+                        <h2>{{product.title}}</h2>
+                        <h4>Written By: {{product.user.first_name}} {{product.user.last_name}}</h4>
+                        <p>Published:{{product.timestamp}}</p>
+                        <h3>Price: {{product.price}}</h3>
+                        <p>{{product.description}}</p>
+                    </div>
+                    {% if not request.user.is_staff %}
+                        <a href="{% url 'buy_product' product.id %}" class="btn btn-outline-warning rounded-3 w-100">Buy</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

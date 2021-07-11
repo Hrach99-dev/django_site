@@ -30,15 +30,19 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
-    # image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(upload_to='images/', blank=True)
+
     price = models.CharField(max_length=64)
-    timestamp = models.DateField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+
     published = models.BooleanField()
     user = models.ForeignKey(User(id), on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
+
+
 class Buyer(models.Model):
     user_id = models.ForeignKey(User(id), on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product(id), on_delete=models.CASCADE)
+    product_id  = models.ForeignKey(Product(id), on_delete=models.CASCADE)

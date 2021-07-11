@@ -17,9 +17,11 @@
                   <a class="text-decoration-none" href="{% url 'index' %}">Home</a>
                 </li>
                 {% if user.is_authenticated %}
-                  <li class="nav-link">
-                    <a class="text-decoration-none" href="{% url 'addprod' %}">Add Product</a>
-                  </li>
+                  {%  if user.is_staff == True %}
+                    <li class="nav-link">
+                      <a class="text-decoration-none" href="{% url 'addprod' %}">Add Product</a>
+                    </li>
+                  {% endif %}
                   <li class="nav-link">
                     <a class="text-decoration-none" href="{% url 'about' %}">AboutUs</a>
                   </li>

@@ -12,13 +12,20 @@
     <div class="col">
         <div class="h-100 p-5 bg-light border rounded-3 text-center">
             <h3>Add Product</h3>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.title}} <br>
                 {{ form.description}} <br>
                 {{ form.price}} <br>
-                <div>Is published ? </div>
-                {{ form.published}} <br>
+                <div class="mb-3 w-50" style="margin: 15px auto 0px">
+                    <label for="formFile" class="form-label">Image</label>
+                    {{ form.image }}
+                </div>
+                
+                <div class="form-check form-switch" style="width: 140px; margin: 15px auto 0px">
+                    <input class="form-check-input" name="published" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Is published ?</label>
+                </div>
                 <input class="w-25 mt-3 btn btn-outline-primary " type="submit" value="Register">
             </form>
             {% if messages %}

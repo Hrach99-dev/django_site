@@ -4,5 +4,20 @@
 
 
 {% block content %}
-    <h1>{{user_id}}</h1>
+    <div class="row">
+        {% for item in all_item%}
+            <div class="col-3">
+                <div class="card">
+                    <img src="media/{{item.image}}" class="card-img-top" height="200px">
+                    <div class="card-body">
+                        <h2>{{item.title}}</h2>
+                        <!-- <h4>Written By: {{item.user.first_name}} {{item.user.last_name}}</h4> -->
+                        <p>Published:{{item.timestamp}}</p>
+                        <h3>Price: {{item.price}}</h3>
+                        <p>{{item.description}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

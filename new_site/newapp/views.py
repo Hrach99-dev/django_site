@@ -1,8 +1,6 @@
-from django.contrib.auth import hashers
 from .forms import AddProduct
 from django.shortcuts import render, redirect
-from .models import Product
-from datetime import date
+from .models import Buyer, Product
 
 from django.contrib import messages
 
@@ -12,7 +10,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.hashers import make_password
 
 
 
@@ -22,8 +20,8 @@ from django.contrib.auth.hashers import check_password, make_password
 
 
 def index(request):
-    users = User.objects.all()
-    return render(request, 'index.html', {'users':users})
+    products = Product.objects.filter(published=True).all()
+    return render(request, 'index.html', {'products':products})
 
 
 def about(request):
@@ -94,30 +92,57 @@ def logout(request):
 
 
 
-
-# @login_required
+@login_required
 def profile(request):
-    user_id = request.user
+    user_id = request.user.id
+    all_item = Buyer.objects.filter(user=user_id)
     
-    return render(request, 'profile.html', {'user_id':user_id})
+    return render(request, 'profile.html', {'all_item':all_item})
 
 
 
 
 
+@login_required
 def addprod(request):
-    form = AddProduct(request.POST)
+    form = AddProduct(request.POST, request.FILES)
     if form.is_valid():
-        prod = Product(
-            title=form.cleaned_data['title'],
-            description=form.cleaned_data['description'],
-            price=form.cleaned_data['price'],
-            timestamp= date.today().strftime("%m/%d/%y"), #<<<<----????
-            published=form.cleaned_data['published'],
+        if request.user.is_staff == True:
+            title=form.cleaned_data['title']
+            description=form.cleaned_data['description']
+            price=form.cleaned_data['price']
+            published=request.POST.get('published', False)
             user = request.user
-        )
-        prod.save()
+            image = form.cleaned_data['image']
 
-        return redirect('index')
+            if published == 'on':
+                published = True
+
+            if len(price) - 1 != '$':
+                price = price + '$'
+            else:
+                price = price
+            
+
+            prod = Product(
+                title = title,
+                description = description,
+                image = image,
+                price = price,
+                published = published,
+                user = user,
+            )
+            prod.save()
+
+            return redirect('index')
 
     return render(request, 'addprod.html', {'form':form})
+
+
+@login_required
+def buy_product(request, product_id):
+    user_id = request.user.pk
+    
+    buyer = Buyer(user=user_id, product=product_id)
+    buyer.save()
+    return redirect('profile')
