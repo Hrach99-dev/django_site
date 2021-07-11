@@ -83,24 +83,9 @@ def register(request):
 
 
 
-
-
 def logout(request):
     auth.logout(request)
     return redirect('login')
-
-
-
-
-@login_required
-def profile(request):
-    user_id = request.user.id
-    all_item = Buyer.objects.filter(user=user_id)
-    
-    return render(request, 'profile.html', {'all_item':all_item})
-
-
-
 
 
 @login_required
@@ -112,7 +97,7 @@ def addprod(request):
             description=form.cleaned_data['description']
             price=form.cleaned_data['price']
             published=request.POST.get('published', False)
-            user = request.user
+            author = request.user
             image = form.cleaned_data['image']
 
             if published == 'on':
@@ -130,7 +115,7 @@ def addprod(request):
                 image = image,
                 price = price,
                 published = published,
-                user = user,
+                author = author,
             )
             prod.save()
 
@@ -139,10 +124,27 @@ def addprod(request):
     return render(request, 'addprod.html', {'form':form})
 
 
+
+
+@login_required
+def profile(request):
+    
+    user = request.user
+    all_item = Buyer.objects.filter(user_obj=user).all()
+    
+    return render(request, 'profile.html', {'all_item':all_item})
+
+
+
+
+
 @login_required
 def buy_product(request, product_id):
-    user_id = request.user.pk
-    
-    buyer = Buyer(user=user_id, product=product_id)
+    user = request.user
+    product = Product.objects.get(id=product_id)
+ 
+    buyer = Buyer(user_obj=user, product_obj=product)
     buyer.save()
+    
+    
     return redirect('profile')

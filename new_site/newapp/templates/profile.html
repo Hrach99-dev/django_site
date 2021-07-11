@@ -4,20 +4,22 @@
 
 
 {% block content %}
-    <div class="row">
-        {% for item in all_item%}
-            <div class="col-3">
-                <div class="card">
-                    <img src="media/{{item.image}}" class="card-img-top" height="200px">
-                    <div class="card-body">
-                        <h2>{{item.title}}</h2>
-                        <!-- <h4>Written By: {{item.user.first_name}} {{item.user.last_name}}</h4> -->
-                        <p>Published:{{item.timestamp}}</p>
-                        <h3>Price: {{item.price}}</h3>
-                        <p>{{item.description}}</p>
+    {% if all_item %}
+        <div class="row">
+            {% for item in all_item%}
+                <div class="col-3">
+                    <div class="card">
+                        <img src="media/{{item.product_obj.image}}" class="card-img-top" height="200px">
+                        <div class="card-body">
+                            <h2>{{item.product_obj.title}}</h2>
+                            <h4>Written By: {{item.user_obj.first_name}} {{item.user_obj.last_name}}</h4>
+                            <p>Published:{{item.product_obj.timestamp}}</p>
+                            <h3>Price: {{item.product_obj.price}}</h3>
+                            <p>{{item.product_obj.description}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

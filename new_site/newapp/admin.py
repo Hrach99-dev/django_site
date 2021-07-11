@@ -25,6 +25,6 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Buyer)
 class BuyerAdmin(admin.ModelAdmin):
-    list_display = ('user_id', 'product_id')
-    list_filter = ['product_id']
-    search_fields = ['user_id']
+    list_display = ('user_obj', 'product_obj')
+    list_filter = ['product_obj']
+    search_fields = ['user_obj']
