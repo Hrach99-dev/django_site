@@ -102,6 +102,8 @@ def addprod(request):
 
             if published == 'on':
                 published = True
+            else:
+                published = False
 
             if len(price) - 1 != '$':
                 price = price + '$'
@@ -130,8 +132,12 @@ def addprod(request):
 def profile(request):
     
     user = request.user
-    all_item = Buyer.objects.filter(user_obj=user).all()
     
+
+    if user.is_staff:
+        all_item = Product.objects.filter(author=user).all()
+    else:
+        all_item = Buyer.objects.filter(user_obj=user).all()
     return render(request, 'profile.html', {'all_item':all_item})
 
 
@@ -148,3 +154,54 @@ def buy_product(request, product_id):
     
     
     return redirect('profile')
+
+
+def update_product(request, product_id):
+    
+    product = Product.objects.get(id=product_id)
+
+    form = AddProduct(request.POST, request.FILES)
+
+    if form.is_valid():
+        product.title=form.cleaned_data['title']
+        product.description=form.cleaned_data['description']
+        price = form.cleaned_data['price']
+
+        if len(price) - 1 != '$':
+            price = price + '$'
+        else:
+            price = price
+
+        product.price=price
+
+        published=request.POST.get('published', False)
+
+        if published == 'on':
+            published = True
+        product.published = published
+
+        product.author = request.user
+
+        product.image = form.cleaned_data['image']
+
+        product.save()
+        return redirect('index')
+    elif request.method == 'GET':
+        form.cleaned_data['title'] = product.title
+        form.cleaned_data['description'] = product.description
+        form.cleaned_data['price'] = product.price
+        if product.published == True:
+            form.cleaned_data['published'] = 'on'
+        else:
+            form.cleaned_data['published'] = 'off'
+        form.cleaned_data['image'] = product.image
+
+    return render(request ,'addprod.html', {'form':form})
+
+
+
+
+@login_required
+def delete_product(request ,product_id):
+    Product.objects.get(id=product_id).delete()
+    return redirect('index')

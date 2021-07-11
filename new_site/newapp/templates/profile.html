@@ -4,22 +4,51 @@
 
 
 {% block content %}
+    <div class="col">
+        <div class="h-100 p-5 bg-light border rounded-3 text-center">
+            <h1>Profile</h1>
+        </div>
+    </div>
     {% if all_item %}
-        <div class="row">
-            {% for item in all_item%}
-                <div class="col-3">
-                    <div class="card">
-                        <img src="media/{{item.product_obj.image}}" class="card-img-top" height="200px">
-                        <div class="card-body">
-                            <h2>{{item.product_obj.title}}</h2>
-                            <h4>Written By: {{item.user_obj.first_name}} {{item.user_obj.last_name}}</h4>
-                            <p>Published:{{item.product_obj.timestamp}}</p>
-                            <h3>Price: {{item.product_obj.price}}</h3>
-                            <p>{{item.product_obj.description}}</p>
+        {% if request.user.is_staff %}
+            <div class="row">
+                {% for item in all_item%}
+                    <div class="col-3">
+                        <div class="card">
+                            <img src="media/{{item.image}}" class="card-img-top" height="200px">
+                            <div class="card-body">
+                                <h3>{{item.title}}</h3>
+                                <h5>Written By: {{item.author.first_name}} {{item.author.last_name}}</h5>
+                                <p>Published:{{item.timestamp}}</p>
+                                <h3>Price: {{item.price}}</h3>
+                                <p>{{item.description}}</p>
+                            </div>
+                            {% if item.author.id == request.user.id %}
+                                <a href="{% url 'update_product' item.id %}" class="btn btn-outline-primary rounded-3 w-100">Update</a>
+                                <a href="{% url 'delete_product' item.id %}" class="btn btn-outline-danger rounded-3 w-100">Delete</a>   
+                            {% endif %}
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="row">
+                {% for item in all_item%}
+                    <div class="col-3">
+                        <div class="card">
+                            <img src="media/{{item.product_obj.image}}" class="card-img-top" height="200px">
+                            <div class="card-body">
+                                <h2>{{item.product_obj.title}}</h2>
+                                <h4>Written By: {{item.user_obj.first_name}} {{item.user_obj.last_name}}</h4>
+                                <p>Published:{{item.product_obj.timestamp}}</p>
+                                <h3>Price: {{item.product_obj.price}}</h3>
+                                <p>{{item.product_obj.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endif %}
+   
 {% endblock %}

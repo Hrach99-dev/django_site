@@ -17,8 +17,8 @@
                 <div class="card">
                     <img src="media/{{product.image}}" class="card-img-top" height="200px">
                     <div class="card-body">
-                        <h2>{{product.title}}</h2>
-                        <h4>Written By: {{product.author.first_name}} {{product.author.last_name}} </h4>
+                        <h3>{{product.title}}</h3>
+                        <h5>Written By: {{product.author.first_name}} {{product.author.last_name}} </h5>
                         <p>Published:{{product.timestamp}}</p>
                         <h3>Price: {{product.price}}</h3>
                         <p>{{product.description}}</p>
@@ -26,6 +26,7 @@
                     {% if not request.user.is_staff %}
                         <a href="{% url 'buy_product' product.id %}" class="btn btn-outline-warning rounded-3 w-100">Buy</a>
                     {% endif %}
+                    
                 </div>
             </div>
         {% endfor %}
