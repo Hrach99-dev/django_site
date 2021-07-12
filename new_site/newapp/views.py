@@ -205,3 +205,5 @@ def update_product(request, product_id):
 def delete_product(request ,product_id):
     Product.objects.get(id=product_id).delete()
     return redirect('index')
+
+
