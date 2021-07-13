@@ -33,9 +33,20 @@
         {% endfor %}
     </div>
 
-    <div class="position-fixed" style="bottom: 20px; right:20px;">
-         <h1>Hello world</h1>
+    <div class="position-fixed" style="bottom: 20px; right:20px; width: 320px;">
+        <div class="chat-container"></div>
+        <script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js"></script>
+        <script type="text/javascript">
+          var chatroom = new window.Chatroom({
+            host: "http://127.0.0.1:8000/",
+            title: "Chatbot",
+            container: document.querySelector(".chat-container"),
+            welcomeMessage: "Hi. How may I help you?",
+            
+          });
+          chatroom.openChat();
 
-        
-    </div>
+          
+        </script>
+   </div>
 {% endblock %}
